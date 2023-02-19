@@ -10,6 +10,7 @@ public class Timer : MonoBehaviour
     public Text timer;
     public Text points;
     public GameObject winScreen;
+    public PlayerController pc;
 
     public Transform[] spawns;
 
@@ -66,7 +67,9 @@ public class Timer : MonoBehaviour
         var location = Random.Range(0, spawns.Length);
         yield return new WaitForSeconds(spawnTimer);
         Instantiate(enemies[enemy], spawns[location].transform.position, spawns[location].transform.rotation);
-
-        StartCoroutine(Spawn());
+        if(pc.PlayerLife != 0)
+        {
+            StartCoroutine(Spawn());
+        }
     }
 }

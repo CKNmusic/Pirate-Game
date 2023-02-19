@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     public static int points;
 
-    public int PlayerLife = 3;
+    public int PlayerLife = 5;
     public int playerSkin;
     public Sprite[] Skin;
 
@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     public GameObject BulletShootLocation2;
     public GameObject BulletShootLocation3;
 
+
+    public Timer timer;
     public GameObject Bullet;
 
     Vector3 mousePosition;
@@ -109,7 +111,7 @@ public class PlayerController : MonoBehaviour
     {
         lc.recharge.value = 0;
         Instantiate(Bullet, BulletShootLocation.transform.position, BulletShootLocation.transform.rotation);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         canShoot = true;
 
     }    
@@ -120,7 +122,7 @@ public class PlayerController : MonoBehaviour
         Instantiate(Bullet, BulletShootLocation.transform.position, BulletShootLocation.transform.rotation);
         Instantiate(Bullet, BulletShootLocation2.transform.position, BulletShootLocation2.transform.rotation);
         Instantiate(Bullet, BulletShootLocation3.transform.position, BulletShootLocation3.transform.rotation);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         canShoot = true;
 
     }
@@ -135,13 +137,15 @@ public class PlayerController : MonoBehaviour
 
     public void destroy()
     {
-
-        Destroy(gameObject);
+        OnDestroyBoat();
+        //Destroy(gameObject);
     }
 
-    private void OnDestroy()
+    private void OnDestroyBoat()
     {
+        timer.enabled = false;
         Time.timeScale = 0;
+
         lostScreen.SetActive(true);
     }
 
@@ -165,7 +169,7 @@ public class PlayerController : MonoBehaviour
     {
 
         Debug.Log(collision);
-        if (collision.gameObject.name == "Enemy" )
+        if (collision.gameObject.tag == "Enemy" )
         {
             PlayerLife = 0;
         }
